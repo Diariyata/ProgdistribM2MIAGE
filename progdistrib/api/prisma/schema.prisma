@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model role{
+    role_id Int @id @default(autoincrement())
+    role_nom String @unique
+    utilisateur utilisateur[]
+}
+
+model utilisateur {
+    user_id Int @id @default(autoincrement())
+    nom String
+    email String @unique
+    password String
+    telephone String
+    annonce annonces[]
+    reservation reservation[]
+    id_role Int
+    role role @relation(fields: [id_role], references: [role_id])
+}
+
+model annonces {
+    annonce_id Int @id @default(autoincrement())
+    picture String
+    titre String
+    description String
+    adresse String
+    prix Int
+    date_dispos DateTime
+    id_user Int
+    utilisateur utilisateur @relation(fields: [id_user], references: [user_id])
+    reservation reservation[]
+    disponibilite disponibilite[]
+}
+
+model reservation{
+    reservation_id Int @id @default(autoincrement())
+    date_debut DateTime
+    date_fin DateTime
+    id_user Int
+    id_annonce Int
+    utilisateur utilisateur @relation(fields: [id_user], references: [user_id])
+    annonce annonces @relation(fields: [id_annonce], references: [annonce_id])
+}
+
+model disponibilite {
+  disponibilite_id Int @id @default(autoincrement())
+  date_debut DateTime
+  date_fin DateTime
+  id_annonce Int
+  annonce annonces @relation(fields: [id_annonce], references: [annonce_id])
+}
