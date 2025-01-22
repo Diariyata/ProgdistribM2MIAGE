@@ -12,7 +12,7 @@ Avant de commencer, assurez-vous que les outils suivants sont installés sur vot
 ## Installation
 1. Clonez le dépôt sur votre machine locale :
  ```bash
-   git clone <URL_DU_DEPOT>
+   git clone https://github.com/Diariyata/ProgdistribM2MIAGE.git
    cd progdistrib
 ```
 2. Assurez-vous que Docker est en cours d'exécution sur votre machine.
